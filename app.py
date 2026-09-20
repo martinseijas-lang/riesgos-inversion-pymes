@@ -158,7 +158,7 @@ RIESGOS = {
         "causa": "La inversión depende de que aumenten los ingresos.",
         "evento": "Las ventas adicionales son menores o llegan más tarde de lo esperado.",
         "consecuencia": "La empresa puede tener más dificultad para recuperar la inversión y mantener dinero disponible.",
-        "tratamiento": "Comparar las ventas reales con las que esperabas obtener y revisar gastos o compromisos si quedan claramente por debajo de lo previsto.",
+        "tratamiento": "Fraccionar la inversión en etapas y/o validar la demanda antes de comprometer el monto total; diversificar canales de venta.",
         "indicador": "Ventas reales generadas por la inversión vs. ventas esperadas.",
         "como_medir": "Ejemplo: esperabas $200.000 y obtuviste $150.000.",
         "frecuencia": "Mensual",
@@ -170,7 +170,7 @@ RIESGOS = {
         "causa": "No se contemplaron todos los gastos relacionados con la inversión.",
         "evento": "El costo total termina siendo mayor al pensado.",
         "consecuencia": "La empresa necesita más dinero del previsto o queda con menos dinero disponible.",
-        "tratamiento": "Anotar todos los costos relacionados con la inversión y comparar regularmente cuánto pensabas gastar con cuánto terminaste gastando.",
+        "tratamiento": "Presupuestar con un margen de contingencia (10-15%) y cerrar cotizaciones a precio fijo con los proveedores.",
         "indicador": "Gasto previsto vs. gasto real.",
         "como_medir": "Ejemplo: previsto $500.000 / real $575.000.",
         "frecuencia": "Mensual",
@@ -182,7 +182,7 @@ RIESGOS = {
         "causa": "La empresa tiene poco margen de dinero disponible durante la inversión.",
         "evento": "La inversión tarda más en generar resultados o aparecen gastos inesperados.",
         "consecuencia": "Puede faltar dinero para pagar gastos habituales u otras obligaciones.",
-        "tratamiento": "Controlar cuánto dinero disponible tiene la empresa para seguir funcionando mientras la inversión todavía no genera los resultados esperados.",
+        "tratamiento": "Constituir un fondo de reserva antes de iniciar la inversión y/o gestionar una línea de crédito de respaldo.",
         "indicador": "Meses de gastos normales que podés cubrir con el dinero disponible.",
         "como_medir": "Ejemplo: tenés $300.000 disponibles y gastás $100.000 por mes = 3 meses.",
         "frecuencia": "Mensual",
@@ -194,7 +194,7 @@ RIESGOS = {
         "causa": "La inversión genera cuotas u obligaciones periódicas.",
         "evento": "En un mes complicado no hay dinero suficiente para pagar en fecha.",
         "consecuencia": "Pueden aparecer atrasos, recargos y más presión sobre el dinero disponible.",
-        "tratamiento": "Registrar todas las cuotas y controlar antes de cada vencimiento si hay dinero suficiente para pagarlas.",
+        "tratamiento": "Elegir un esquema de cuotas acorde a la estacionalidad de ingresos; negociar plazos de gracia si es posible.",
         "indicador": "Cuotas pagadas en fecha / total de cuotas vencidas.",
         "como_medir": "Ejemplo: 12 cuotas vencidas / 12 pagadas en fecha = 100%.",
         "frecuencia": "Mensual",
@@ -206,7 +206,7 @@ RIESGOS = {
         "causa": "La inversión tiene costos en dólares pero la empresa obtiene la mayor parte de sus ingresos en pesos.",
         "evento": "El dólar sube.",
         "consecuencia": "La cuota, deuda o costo de la inversión aumenta en pesos.",
-        "tratamiento": "Revisar cuánto aumenta en pesos la deuda o la cuota cuando cambia el dólar y prever cómo cubrir esa diferencia.",
+        "tratamiento": "Tomar financiamiento en la misma moneda que los ingresos principales, o cubrir parcialmente el riesgo cambiario.",
         "indicador": "Valor en pesos de la cuota o deuda.",
         "como_medir": "Ejemplo: comparar cuánto costaba la cuota en pesos el mes pasado y cuánto cuesta ahora.",
         "frecuencia": "Mensual",
@@ -218,7 +218,7 @@ RIESGOS = {
         "causa": "Todavía quedan permisos, instalaciones o pasos necesarios antes de poder usar la inversión.",
         "evento": "Uno o más de esos pasos se demora.",
         "consecuencia": "El dinero queda invertido, pero la empresa todavía no puede generar ingresos con esa inversión.",
-        "tratamiento": "Hacer una lista simple de permisos, instalaciones y trabajos necesarios, marcando cuáles están completos y cuáles siguen pendientes.",
+        "tratamiento": "Iniciar en paralelo los trámites, permisos e instalaciones necesarios, con margen de tiempo en el cronograma.",
         "indicador": "Pasos completados / pasos necesarios.",
         "como_medir": "Ejemplo: 8 pasos necesarios / 6 completados = 75%.",
         "frecuencia": "Cuando ocurra un cambio importante",
@@ -253,13 +253,15 @@ RIESGOS = {
 # FUNCIONES
 # ============================================================
 def clasificar(nivel):
+    # Rangos explícitos de la matriz 5x5:
+    # Bajo 1-4 | Medio 5-9 | Alto 10-14 | Crítico 15-25
     if nivel <= 0:
         return "Sin evaluar"
-    if nivel <= 5:
+    if nivel <= 4:
         return "Bajo"
-    if nivel <= 10:
+    if nivel <= 9:
         return "Medio"
-    if nivel <= 15:
+    if nivel <= 14:
         return "Alto"
     return "Crítico"
 
@@ -699,6 +701,8 @@ else:
         unsafe_allow_html=True
     )
 
+    st.caption("Rangos de la matriz: Bajo 1–4 · Medio 5–9 · Alto 10–14 · Crítico 15–25")
+
     st.markdown("### Orden de prioridad")
     st.dataframe(
         df_eval[
@@ -715,8 +719,9 @@ st.divider()
 # ============================================================
 st.header("4. Qué hacer con cada riesgo")
 st.write(
-    "La herramienta propone una acción simple y una forma de medir si el riesgo está siendo controlado. "
-    "Podés modificar ambas cosas según tu empresa."
+    "La herramienta propone una acción preventiva para reducir la probabilidad o el impacto del riesgo, "
+    "y un indicador separado para hacer seguimiento y detectar si el riesgo se está manifestando. "
+    "Podés modificar ambos según tu empresa."
 )
 
 plan = []
